@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>쿵쿵따리 쿵쿵따</title>
+    <body>
+      <div><span id="order">1</span>번째 참가자</div>
+      <div>제시어: <span id="word"></span></div>
+      <input type="text" />
+      <button>입력</button>
+      <script>
+        let number = Number(prompt("참가자는 몇명인가요?"));
+        const $input = document.querySelector("input"); //입력 값을 받음
+        const $button = document.querySelector("button");
+        const $word = document.querySelector("#word");
+        const $order = document.querySelector("#order");
+        let word;
+        let newWord;
+        const onInput = (event) => {
+          newWord = event.target.value;
+        };
+        const onClickButton = () => {
+          if (newWord.length !== 3) {
+            //입력 값이 1. 세글자가 맞는지 확인
+            alert("세글자가 아닙니다"); //세글자가 아닙니다 팝업 생성
+          } else {
+            if (!word || word.at(-1) === newWord[0]) {
+              // 기준 단어가 없거나 첫글자가 기준 단어의 맨 앞글자가 맞는지 확인
+              const order = Number($order.textContent);
+              if (order + 1 > number) {
+                $order.textContent = 1;
+              } else {
+                $order.textContent = order + 1;
+              } //순서 넘어가기
+              word = newWord; //현재 단어를 기준 단어로 바꾸고
+              $word.textContent = word;
+            } else {
+              alert("쿵쿵따 그렇게 하는거 아닌데...");
+            }
+          }
+          $input.value = "";
+          $input.focus(); //입력창을 비우고 커서를 포커스하기
+        };
+
+        while (number < 2) {
+          // 참가자가 몇명인지 확인
+          alert("혼자서는 할 수 없어요"); // 혼자서는 할 수 없어요 팝업 생성
+          number = Number(prompt("참가자는 몇명인가요?")); // 참가자가 몇명인지 확인하기 2
+        }
+
+        $input.addEventListener("input", onInput);
+        $button.addEventListener("click", onClickButton);
+      </script>
+    </body>
+  </head>
+</html>
